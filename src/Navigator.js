@@ -1,14 +1,14 @@
-import {createAppContainer, createSwitchNavigator} from 'react-navigation'
-
+import { createAppContainer, createSwitchNavigator } from 'react-navigation'
+import { createDrawerNavigator } from 'react-navigation-drawer'
 import TaskList from './screens/TaskList'
 import Auth from './screens/Auth'
 
-const mainRoutes ={
-    Auth:{
-        name:'Auth',
+const mainRoutes = {
+    Auth: {
+        name: 'Auth',
         screen: Auth
     },
-    Home:{
+    Home: {
         name: 'Home',
         screen: TaskList
     }
