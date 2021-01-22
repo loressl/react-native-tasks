@@ -14,11 +14,12 @@ import commonStyles from '../commonStyles'
 import AuthInput from '../components/AuthInput'
 
 import { server, showError, showSuccess } from '../common'
+import AsyncStorage from '@react-native-community/async-storage'
 
 const initialState = {
     name: '',
-    email: 'alvo@hogwarts.com',
-    password: 'alvo1234',
+    email: '',
+    password: '',
     confirmPassword: '',
     stageNew: false,
 }
@@ -58,8 +59,9 @@ export default class Auth extends Component {
                 email: this.state.email,
                 password: this.state.password,
             })
+            AsyncStorage.setItem('userData', JSON.stringify(res.data))
             axios.defaults.headers.common['Authorization'] = `Bearer ${res.data.token}`
-            this.props.navigation.navigate('Home')
+            this.props.navigation.navigate('Home', res.data)
         } catch (e) {
             showError(e)
         }
@@ -80,7 +82,7 @@ export default class Auth extends Component {
         return (
             <ImageBackground source={backgroundImage}
                 style={styles.background}>
-                {/* <Text style={styles.title}>Tasks</Text> */}
+                <Text style={styles.title}>Tasks</Text>
                 <View style={styles.formContainer}>
                     <Text style={styles.subtitle}>
                         {this.state.stageNew ? 'Cria a sua conta' : 'Informe seus dados'}
@@ -149,8 +151,8 @@ const styles = StyleSheet.create({
     title: {
         fontFamily: commonStyles.fontFamily,
         color: "black",
-        fontSize: 60,
-        marginBottom: 10,
+        fontSize: 55,
+        marginBottom: 5,
     },
     subtitle: {
         fontFamily: commonStyles.fontFamily,
